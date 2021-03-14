@@ -1,0 +1,11 @@
+/vue_env/
+.idea/
+*.pyc
+*~
+__pycache__
+vue_env/lib
+db.sqlite3
+/static
+.DS_Store
+/lib/
+/.idea/.gitignore
