@@ -6,7 +6,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
             model = Customer
-            fields = ('pk','name', 'address', 'city', 'state', 'zipcode', 'email', 'email', 'cell_phone')
+            fields = ('pk','name','cust_number', 'address', 'city', 'state', 'zipcode', 'email', 'email', 'cell_phone')
 
 class InvestmentSerializer(serializers.ModelSerializer):
 
