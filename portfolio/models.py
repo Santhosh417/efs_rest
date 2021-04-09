@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 # Create your models here.
 class Customer(models.Model):
     name = models.CharField(max_length=50)
@@ -53,11 +54,12 @@ class Investment(models.Model):
     def cust_number(self):
         return self.customer.cust_number
 
+
 class Stock(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='stocks')
     symbol = models.CharField(max_length=10)
     name = models.CharField(max_length=50)
-    shares = models.DecimalField (max_digits=10, decimal_places=1)
+    shares = models.DecimalField(max_digits=10, decimal_places=1)
     purchase_price = models.DecimalField(max_digits=10, decimal_places=2)
     purchase_date = models.DateField(default=timezone.now, blank=True, null=True)
 
@@ -70,6 +72,27 @@ class Stock(models.Model):
 
     def initial_stock_value(self):
         return self.shares * self.purchase_price
+
+    def cust_number(self):
+        return self.customer.cust_number
+
+
+class Fund(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='funds')
+    symbol = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
+    quantity = models.DecimalField(max_digits=10, decimal_places=1)
+    purchase_price = models.DecimalField(max_digits=10, decimal_places=2)
+    purchase_date = models.DateField(default=timezone.now, blank=True, null=True)
+
+    def created(self):
+        self.save()
+
+    def __str__(self):
+        return str(self.customer)
+
+    def initial_fund_value(self):
+        return self.quantity * self.purchase_price
 
     def cust_number(self):
         return self.customer.cust_number

@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^api/investments/(?P<pk>[0-9]+)$', views.getInvestment),
     path('stocks/', views.stock_list),
     url(r'^api/stocks/$', views.stock_list),
-    url(r'^api/stocks/(?P<pk>[0-9]+)$', views.getStock)
-
+    url(r'^api/stocks/(?P<pk>[0-9]+)$', views.getStock),
+    path('funds/', views.fund_list),
+    url(r'^api/funds/$', views.fund_list),
+    url(r'^api/funds/(?P<pk>[0-9]+)$', views.getFund)
 ]
