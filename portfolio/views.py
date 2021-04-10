@@ -1,10 +1,12 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.views.decorators.csrf import csrf_exempt
 from .serializers import *
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from .models import *
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 @csrf_exempt
 @api_view(['GET', 'POST'])
@@ -181,3 +183,17 @@ def getFund(request, pk):
         fund.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([])
+def signup(request):
+    permission_classes = [AllowAny]
+    if request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            password = serializer.validated_data.get('password')
+            serializer.validated_data['password'] = make_password(password)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
