@@ -24,9 +24,10 @@ class StockList(admin.ModelAdmin):
 
 
 class FundList(admin.ModelAdmin):
-    list_display = ('customer', 'symbol', 'name', 'quantity', 'purchase_price', 'purchase_date')
-    list_filter = ('customer', 'symbol', 'name')
-    search_fields = ('customer', 'symbol', 'name')
+    list_display = ('pk', 'customer', 'cust_number', 'category', 'symbol', 'description', 'acquired_value',
+                    'acquired_date', 'recent_value', 'recent_date')
+    list_filter = ('customer', 'symbol', 'description')
+    search_fields = ('customer', 'symbol', 'description')
     ordering = ['customer']
 
 
